@@ -1,0 +1,84 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.venv
+virtualenv/
+pyenv/
+.python-version
+
+# Environment Variables (CRITICAL for FastAPI secrets)
+.env
+.env.*
+!.env.example
+*.env
+
+# Database files (SQLite, etc.)
+*.db
+*.sqlite
+*.sqlite3
+db.sqlite3
+
+# Logs
+*.log
+logs/
+*.pid
+*.seed
+*.pid.lock
+
+# Testing / Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+cover/
+
+# Distribution / Packaging
+build/
+dist/
+*.egg-info/
+*.egg
+MANIFEST
+
+# IDE and OS junk
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Jupyter Notebooks (if you use them for testing)
+.ipynb_checkpoints/
+
+# Celery / Async task files (if you use them)
+celerybeat-schedule
+celerybeat.pid
+
+# Docker (local overrides)
+docker-compose.override.yml
+*.dockerignore
+
+# Alembic (Migrations) - usually versions ARE committed, but cache isn't.
+# This is already covered by __pycache__ above. 
+# If you want to exclude migration files entirely (not recommended), uncomment:
+# alembic/versions/*.py
+
+# Static files collected by Django/FastAPI (if served locally)
+static/
+media/
+
+# PDM / Poetry (alternative package managers)
+.pdm.toml
+poetry.lock # Usually committed, but ignore if you prefer Pip
