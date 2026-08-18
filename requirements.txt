@@ -1,0 +1,50 @@
+# Web framework
+fastapi
+uvicorn[standard]
+pydantic
+
+# Config
+python-dotenv
+pydantic-settings
+
+# Database
+sqlalchemy[asyncio]
+asyncpg
+alembic
+
+# Cache / broker
+redis[hiredis]
+
+# Background jobs
+dramatiq
+
+# Auth (JWT RS256)
+pyjwt[crypto]
+
+# Tracing (OpenTelemetry)
+opentelemetry-api
+opentelemetry-sdk
+opentelemetry-instrumentation-fastapi
+opentelemetry-instrumentation-sqlalchemy
+opentelemetry-instrumentation-redis
+opentelemetry-instrumentation-asyncpg
+opentelemetry-exporter-otlp
+
+# Logging
+structlog
+python-json-logger
+
+# Metrics
+prometheus-client
+prometheus-fastapi-instrumentator
+
+# Testing
+pytest
+pytest-asyncio
+httpx
+testcontainers[postgres,redis]
+schemathesis
+
+# Profiling
+scalene
+py-spy
