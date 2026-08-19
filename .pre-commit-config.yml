@@ -1,0 +1,30 @@
+repos:
+  # Ruff (Linter)
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.4  
+    hooks:
+      - id: ruff
+        args: [--fix]
+
+  # Black (Code Formatter)
+  - repo: https://github.com/psf/black
+    rev: 24.8.0 
+    hooks:
+      - id: black
+        language_version: python3.12
+
+  # isort (Import Sorter)
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+
+  # Mypy (Static Type Checker)
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.14.1  
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - pydantic
+          - sqlalchemy
+        args: [--ignore-missing-imports]

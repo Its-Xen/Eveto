@@ -1,9 +1,9 @@
 [project]
 name = "Eveto"
 version = "0.1.0"
-description = "Add your description here"
+description = "Event ticketing platform."
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.12"
 dependencies = [
     "alembic>=1.19.1",
     "asyncpg>=0.31.0",
@@ -31,11 +31,37 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "black>=26.5.1",
     "httpx>=0.28.1",
+    "isort>=8.0.1",
+    "mypy>=2.3.1",
+    "pre-commit>=4.6.2",
     "py-spy>=0.4.2",
     "pytest>=9.1.1",
     "pytest-asyncio>=1.4.0",
+    "ruff>=0.16.3",
     "scalene>=2.3.0",
     "schemathesis>=4.24.3",
     "testcontainers[postgres,redis]>=4.15.0",
 ]
+
+
+[tool.black]
+line-length = 88
+target-version = ['py312']
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+ignore_missing_imports = true
