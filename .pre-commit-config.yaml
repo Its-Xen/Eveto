@@ -26,5 +26,7 @@ repos:
       - id: mypy
         additional_dependencies:
           - pydantic
+          - pydantic-settings
           - sqlalchemy
+          - types-redis
         args: [--ignore-missing-imports]
