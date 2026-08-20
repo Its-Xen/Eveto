@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  quality-checks:
+    name: Lint and Type Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          # This caches our uv dependencies, making runs super fast
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        # Installs all dev dependencies (ruff, black, mypy, etc.)
+        run: uv sync --all-extras --dev
+
+      - name: Run Ruff (Linter)
+        # Checks for unused imports, bad practices and ...
+        run: uv run ruff check .
+
+      - name: Run Black (Formatter Check)
+        # --check means "don't change files, just fail if they aren't formatted"
+        run: uv run black --check .
+
+      - name: Run isort (Import Sorter Check)
+        run: uv run isort --check-only .
+
+      - name: Run Mypy (Type Checker)
+        # Only checks the app/ folder so we don't check tests/scripts yet
+        run: uv run mypy app/
