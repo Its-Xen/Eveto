@@ -47,7 +47,7 @@ def create_app() -> FastAPI:
     app.include_router(api_router, prefix="/api/v1")
 
     # 5. Root health check endpoint
-    @app.get("/health", tags=["System"])  # type: ignore[misc]
+    @app.get("/health", tags=["System"])
     async def health_check() -> dict[str, str]:
         """Simple health check endpoint"""
         return {"status": "healthy", "environment": settings.env}

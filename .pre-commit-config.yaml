@@ -20,13 +20,11 @@ repos:
       - id: isort
 
   # Mypy (Static Type Checker)
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.14.1  
+  - repo: local
     hooks:
       - id: mypy
-        additional_dependencies:
-          - pydantic
-          - pydantic-settings
-          - sqlalchemy
-          - types-redis
-        args: [--ignore-missing-imports]
+        name: mypy
+        entry: uv run mypy app/
+        language: system
+        types: [python]
+        pass_filenames: false
