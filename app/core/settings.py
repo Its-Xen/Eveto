@@ -1,8 +1,15 @@
 from enum import Enum
 from pathlib import Path
-from typing import Annotated
 
-from pydantic import BaseModel, Field, FilePath, HttpUrl, PostgresDsn, RedisDsn, SecretStr
+from pydantic import (
+    BaseModel,
+    Field,
+    FilePath,
+    HttpUrl,
+    PostgresDsn,
+    RedisDsn,
+    SecretStr,
+)
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # 1. __file__ is:       Eveto/app/core/settings.py
@@ -23,7 +30,7 @@ class DatabaseSettings(BaseModel):
     host: str
     port: int = 5432
     user: str
-    password: SecretStr       # Secret: No default
+    password: SecretStr  # Secret: No default
     name: str
     pool_size: int = Field(default=10, ge=1, le=100)
     max_overflow: int = Field(default=10, ge=0)
@@ -31,14 +38,17 @@ class DatabaseSettings(BaseModel):
     @property
     def async_dsn(self) -> str:
         """Async DSN for SQLAlchemy 2.0 + asyncpg"""
-        return str(PostgresDsn.build(
-            scheme="postgresql+asyncpg",
-            username=self.user,
-            password=self.password.get_secret_value(),
-            host=self.host,
-            port=self.port,
-            path=self.name,
-        ))
+        return str(
+            PostgresDsn.build(
+                scheme="postgresql+asyncpg",
+                username=self.user,
+                password=self.password.get_secret_value(),
+                host=self.host,
+                port=self.port,
+                path=self.name,
+            )
+        )
+
 
 class RedisSettings(BaseModel):
     url: RedisDsn
@@ -49,12 +59,13 @@ class RedisSettings(BaseModel):
         """Dramatiq broker URL"""
         return str(self.url)
 
+
 class JWTSettings(BaseModel):
     algorithm: str = "RS256"
     access_token_expire_minutes: int = Field(default=30, ge=1, le=1440)
 
-    private_key_path: FilePath  # Validates file exists at startup! 
-    public_key_path: FilePath  
+    private_key_path: FilePath  # Validates file exists at startup!
+    public_key_path: FilePath
 
     @property
     def private_key(self) -> str:
@@ -67,7 +78,7 @@ class JWTSettings(BaseModel):
 
 class MockPaymentSettings(BaseModel):
     base_url: HttpUrl
-    api_key: SecretStr          # Secret: No default
+    api_key: SecretStr  # Secret: No default
 
 
 class OTelSettings(BaseModel):
@@ -75,7 +86,7 @@ class OTelSettings(BaseModel):
     service_name: str = "eventhub-api"
 
 
-# Main Settings 
+# Main Settings
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_prefix="APP_",
