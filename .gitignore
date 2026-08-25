@@ -59,9 +59,10 @@ MANIFEST
 Thumbs.db
 desktop.ini
 
-# Jupyter Notebooks (if you use them for testing)
+# Jupyter Notebooks and some personal files
 .ipynb_checkpoints/
-
+export-requirements.txt
+todo
 # Celery / Async task files (if you use them)
 celerybeat-schedule
 celerybeat.pid
