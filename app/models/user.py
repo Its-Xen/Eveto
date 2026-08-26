@@ -2,7 +2,7 @@ from datetime import datetime
 from enum import Enum as PyEnum
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Enum, String
+from sqlalchemy import DateTime, Enum, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
@@ -32,7 +32,7 @@ class User(Base):
         Enum(UserRole, name="user_role"), default=UserRole.customer
     )
     created_at: Mapped[datetime] = mapped_column(
-        default=datetime.now, timezone=True
+        DateTime(timezone=True), default=datetime.now
     )  # * timezone=True tells Postgres to use TIMESTAMPTZ
 
     # relationships
