@@ -30,8 +30,10 @@ class Event(Base):
     title: Mapped[str] = mapped_column(String(255))
     description: Mapped[str] = mapped_column(String(1000))
 
-    starts_at: Mapped[datetime] = mapped_column(default=datetime.now, timezone=True)
+    starts_at: Mapped[datetime] = mapped_column(timezone=True)
     ends_at: Mapped[datetime] = mapped_column(timezone=True)
+
+    created_at: Mapped[datetime] = mapped_column(default=datetime.now, timezone=True)
 
     status: Mapped[StatusEnum] = mapped_column(
         Enum(StatusEnum, name="event_status"), default=StatusEnum.draft
