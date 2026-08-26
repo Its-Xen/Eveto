@@ -26,7 +26,7 @@ class TicketType(Base):
     sales_start_at: Mapped[datetime] = mapped_column(
         default=datetime.now, timezone=True
     )
-    sales_ends_at: Mapped[datetime] = mapped_column(timezone=True)
+    sales_end_at: Mapped[datetime] = mapped_column(timezone=True)
 
     # relationships
     event: Mapped["Event"] = relationship(back_populates="tickets_created")
