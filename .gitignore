@@ -83,3 +83,4 @@ media/
 # PDM / Poetry (alternative package managers)
 .pdm.toml
 poetry.lock # Usually committed, but ignore if you prefer Pip
+certs/*.pem
