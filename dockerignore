@@ -1,0 +1,164 @@
+# Docker related
+Dockerfile
+.dockerignore
+
+# Version Control
+.git
+.gitignore
+.gitattributes
+.svn
+.hg
+
+# CI/CD & Orchestration
+.github/
+.gitlab/
+.azure/
+.circleci/
+.drone.yml
+.travis.yml
+jenkins/
+.gitlab-ci.yml
+
+# Environment & Secrets (CRITICAL: Keep these out!)
+.env
+.env.*
+!.env.example  # Allow example env files if you have them
+*.pem
+*.key
+*.crt
+*.p12
+secrets/
+.aws/
+.gcloud/
+adr/
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.merge_file_*
+.project
+.classpath
+.settings/
+*.iml
+*.iws
+*.ipr
+.vim/
+todo
+
+# OS Generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Logs & Databases
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.sqlite
+*.sqlite3
+*.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+.cache/
+
+# Node.js / JavaScript / TypeScript
+node_modules/
+npm_modules/
+yarn-error.log
+package-lock.json  # Usually keep this, but comment out if you build locally and copy in CI
+# !package-lock.json # Uncomment if you MUST copy lockfile
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+.eggs/
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Java / Kotlin / Scala
+*.class
+*.jar
+*.war
+*.ear
+target/
+out/
+*.log
+.gradle/
+build/
+gradle/
+
+# .NET / C#
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.pdb
+*.dll
+*.exe
+
+# PHP
+vendor/
+composer.phar
+composer.lock  # Comment out if you need it
+
+# Ruby
+.bundle/
+Gemfile.lock  # Comment out if you need it
+vendor/bundle/
+
+# Go
+*.exe
+*.test
+*.out
+vendor/
+Godeps/
+
+# Rust
+target/
+Cargo.lock  # Comment out if you need it
+
+# Frontend builds (usually built inside container or via CI)
+dist/
+build/
+.next/
+out/
+.nuxt/
+.nx/
+
+# Terraform / Infrastructure
+*.tfstate
+*.tfstate.*
+.terraform/
+crash.log
+override.tf.json
+
+# Docker volumes / data directories (if mapped)
+/data/
+/logs/
+/uploads/
