@@ -1,6 +1,8 @@
 import asyncio
 from datetime import datetime, timedelta
 
+from app.core.security import hash_password
+
 # Assuming i have a hashing function, or a dummy string
 from app.db.session import AsyncSessionLocal
 from app.models.event import Event, StatusEnum
@@ -17,7 +19,7 @@ async def seed_db() -> None:
         # Create a fake admin User
         admin = User(
             email="admin@eveto.com",
-            hashed_password="fakehashesdpass123",
+            hashed_password=hash_password("fakehashesdpass123"),
             full_name="Admin User",
             role=UserRole.admin,
         )
