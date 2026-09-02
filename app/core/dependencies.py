@@ -47,7 +47,7 @@ def require_role(required_role: UserRole) -> Callable[..., Awaitable[User]]:
     """Dependency factory to enforce specific roles (e.g., Admin only)."""
 
     async def role_checker(
-        current_user: Annotated[User, Depends(get_current_user)]
+        current_user: Annotated[User, Depends(get_current_user)],
     ) -> User:
         if current_user.role != required_role:
             raise get_forbidden_exception(required_role.value)
