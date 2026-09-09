@@ -3,7 +3,7 @@ from typing import Any
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import Event
+from app.models.event import Event, StatusEnum
 
 
 async def get_event_by_id(db: AsyncSession, event_id: int) -> Event | None:
@@ -16,6 +16,25 @@ async def get_all_events(
 ) -> list[Event]:
     result = await db.execute(select(Event).offset(skip).limit(limit))
     return list(result.scalars().all())
+
+
+async def get_published_events(
+    db: AsyncSession, skip: int = 0, limit: int = 100
+) -> list[Event]:
+    result = await db.execute(
+        select(Event)
+        .where(Event.status == StatusEnum.published)
+        .offset(skip)
+        .limit(limit)
+    )
+    return list(result.scalars().all())
+
+
+async def get_published_event_by_id(db: AsyncSession, event_id: int) -> Event | None:
+    result = await db.execute(
+        select(Event).where(Event.id == event_id, Event.status == StatusEnum.published)
+    )
+    return result.scalar_one_or_none()
 
 
 async def create_event(

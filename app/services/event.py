@@ -7,6 +7,8 @@ from app.repositories.event import (
     delete_event,
     get_all_events,
     get_event_by_id,
+    get_published_event_by_id,
+    get_published_events,
     update_event,
 )
 from app.schemas.event import EventCreate, EventUpdate
@@ -18,6 +20,17 @@ async def get_events(db: AsyncSession, skip: int = 0, limit: int = 100) -> list[
 
 async def get_event(db: AsyncSession, event_id: int) -> Event:
     event = await get_event_by_id(db, event_id)
+    if not event:
+        raise NotFoundError(detail="Event not found")
+    return event
+
+
+async def list_published_events(db: AsyncSession, skip: int, limit: int) -> list[Event]:
+    return await get_published_events(db, skip, limit)
+
+
+async def get_published_event_or_404(db: AsyncSession, event_id: int) -> Event:
+    event = await get_published_event_by_id(db, event_id)
     if not event:
         raise NotFoundError(detail="Event not found")
     return event
