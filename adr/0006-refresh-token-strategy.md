@@ -1,6 +1,7 @@
 ADR-0006: Refresh Token Strategy & Token Revocation
 
 Date: 2026-9-2 Status: Accepted
+
 Context
 
 Eveto uses stateless JWTs for authentication. Because JWTs are self-contained and verified purely by cryptographic signature, the server does not track them in a database. This means that once a token is issued, it remains valid until its expiration time (exp), even if the user logs out, changes their password, or is banned by an admin. We need to define our strategy for handling session lifetimes and the lack of immediate token revocation.

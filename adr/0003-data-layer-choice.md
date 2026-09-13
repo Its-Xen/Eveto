@@ -1,6 +1,7 @@
 ADR-0003: Data Layer Choice (SQLAlchemy 2.0 Async)
 
 Date: 2026-8-27 Status: Accepted
+
 Context
 
 Eveto's core business logic revolves around high-concurrency ticket reservations (flash sales). To prevent overselling, the system must execute atomic database decrements using row-level locking (SELECT ... FOR UPDATE). The web framework (FastAPI) is entirely async. The data layer must not block the event loop during I/O, must support strong typing, and must allow for complex querying capabilities.

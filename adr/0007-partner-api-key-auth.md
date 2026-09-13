@@ -1,6 +1,7 @@
 ADR-0007: Partner API Key Authentication Design
 
 Date: 2026-9-2 Status: Accepted
+
 Context
 
 Eveto exposes a Partner API (/api/v1/partners/...) for external systems to pull event data. Unlike internal customers and admins who log in via browsers using JWTs, partners are automated external services. They need a secure, stateless way to authenticate API requests. This authentication method will be implemented later alongside rate limiting and API versioning.
