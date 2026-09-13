@@ -1,6 +1,7 @@
 ADR-0002: Dependency and Environment Tool (uv)
 
 Date: 2026-8-16 Status: Accepted
+
 Context
 
 Eveto requires a dependency manager that can handle a complex stack (FastAPI, SQLAlchemy, OpenTelemetry, testcontainers). The development workflow relies heavily on Docker. A major pain point in modern Python development is the slow resolution and installation of dependencies, which drastically slows down Docker builds and CI/CD pipelines. We need a tool that provides strict lockfiles for reproducible builds, manages virtual environments, and is fast.

@@ -1,6 +1,7 @@
 ADR-0001: Web Framework Choice (FastAPI)
 
 Date: 2026-8-15 Status: Accepted
+
 Context
 
 Eveto is a ticketing platform where the core business logic revolves around high-concurrency ticket reservations (flash sales). The system must handle concurrent inventory decrements, asynchronous webhooks, and background jobs without blocking I/O. The framework must natively support async database drivers (asyncpg), have first-class support for data validation, and automatically generate OpenAPI documentation for external partner integrations. 

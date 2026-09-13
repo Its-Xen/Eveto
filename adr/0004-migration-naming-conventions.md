@@ -1,6 +1,7 @@
 ADR-0004: Migration and Naming Conventions
 
 Date: 2026-8-27 Status: Accepted
+
 Context
 
 A relational database schema is never static. As Eveto evolves, the database schema must change. We need a reliable, version-controlled way to apply these changes (migrations). Furthermore, because PostgreSQL is case-sensitive and strict about types, we need a consistent naming convention for tables, columns, and constraints to avoid "duplicate object" errors and make raw SQL debugging intuitive.
