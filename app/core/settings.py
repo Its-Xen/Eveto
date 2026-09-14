@@ -101,6 +101,7 @@ class Settings(BaseSettings):
     name: str = "eveto-api"
     env: Environment = Environment.dev
     log_level: str = "info"
+    cors_origins: list[str] = ["*"]
 
     # Nested Groups
     db: DatabaseSettings

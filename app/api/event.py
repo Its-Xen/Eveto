@@ -3,6 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.rate_limit import check_rate_limit
 from app.db.session import get_db
 from app.models.event import Event
 from app.schemas.event import EventRead
@@ -13,7 +14,10 @@ router = APIRouter()
 
 @router.get("", response_model=list[EventRead])
 async def list_events(
-    db: Annotated[AsyncSession, Depends(get_db)], skip: int = 0, limit: int = 100
+    db: Annotated[AsyncSession, Depends(get_db)],
+    _rate_limit: Annotated[None, Depends(check_rate_limit)],
+    skip: int = 0,
+    limit: int = 100,
 ) -> list[Event]:
     """Public endpoint: List all published events."""
     return await list_published_events(db, skip, limit)
@@ -23,6 +27,7 @@ async def list_events(
 async def get_event(
     event_id: int,
     db: Annotated[AsyncSession, Depends(get_db)],
+    _rate_limit: Annotated[None, Depends(check_rate_limit)],
 ) -> Event:
     """Public endpoint: Get a single published event."""
     return await get_published_event_or_404(db, event_id)
