@@ -1,15 +1,7 @@
 from enum import Enum
 from pathlib import Path
 
-from pydantic import (
-    BaseModel,
-    Field,
-    FilePath,
-    HttpUrl,
-    PostgresDsn,
-    RedisDsn,
-    SecretStr,
-)
+from pydantic import BaseModel, Field, HttpUrl, PostgresDsn, RedisDsn, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # 1. __file__ is:       Eveto/app/core/settings.py
@@ -64,16 +56,16 @@ class JWTSettings(BaseModel):
     algorithm: str = "RS256"
     access_token_expire_minutes: int = Field(default=30, ge=1, le=1440)
 
-    private_key_path: FilePath  # Validates file exists at startup!
-    public_key_path: FilePath
+    private_key_path: str
+    public_key_path: str
 
     @property
     def private_key(self) -> str:
-        return self.private_key_path.read_text()
+        return Path(self.private_key_path).read_text()
 
     @property
     def public_key(self) -> str:
-        return self.public_key_path.read_text()
+        return Path(self.public_key_path).read_text()
 
 
 class MockPaymentSettings(BaseModel):

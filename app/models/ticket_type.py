@@ -30,3 +30,8 @@ class TicketType(Base):
 
     # relationships
     event: Mapped["Event"] = relationship(back_populates="tickets_created")
+
+    @property
+    def available_quantity(self) -> int:
+        """Calculate real-time ticket availability."""
+        return self.total_quantity - self.reserved_quantity - self.sold_quantity
