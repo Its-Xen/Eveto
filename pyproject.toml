@@ -4,10 +4,6 @@ version = "0.1.0"
 description = "Event ticketing platform."
 readme = "README.md"
 requires-python = ">=3.12"
-ignore_missing_imports = true
-mypy_path = "./app"          
-namespace_packages = true    
-explicit_package_bases = true 
 
 dependencies = [
     "alembic>=1.19.1",
@@ -46,6 +42,7 @@ dev = [
     "py-spy>=0.4.2",
     "pytest>=9.1.1",
     "pytest-asyncio>=1.4.0",
+    "pytest-cov>=7.1.0",
     "ruff>=0.16.3",
     "scalene>=2.3.0",
     "schemathesis>=4.24.3",
@@ -78,3 +75,21 @@ plugins = ["pydantic.mypy"]
 init_forbid_extra = true
 init_typed = true
 warn_required_dynamic_aliases = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "--strict-markers -v"
+markers = [
+    "unit: marks tests as unit tests (deselect with '-m \"not unit\"')",
+    "integration: marks tests as integration tests",
+]
+
+[tool.coverage.run]
+source = ["app/services"]
+omit = ["tests/*"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80 
