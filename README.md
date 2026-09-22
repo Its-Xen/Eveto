@@ -140,6 +140,18 @@ docker compose exec api pytest -m contract
 ```
 - **Test requirements:** Integration tests automatically spin up ephemeral Postgres and Redis containers via `testcontainers-python`.
 
+#### CI/CD Pipeline Execution
+
+- In a real CI/CD pipeline (e.g., GitHub Actions), the test suites would be executed in this order:
+
+```bash
+# Linting & Typing
+uv run ruff check . && uv run mypy app/
+# Unit Tests 
+uv run pytest -m unit (No Docker required, runs in seconds).
+# Integration Tests
+uv run pytest -m integration (Requires Docker daemon to be active for Testcontainers).
+```
 
 ## Project Structure
 
