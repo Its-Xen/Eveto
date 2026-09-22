@@ -13,7 +13,10 @@ from app.db.base import Base
 # access to the values within the .ini file in use.
 config = context.config
 
-config.set_main_option("sqlalchemy.url", str(settings.db.async_dsn))
+# * Only use Pydantic settings if
+# * the URL isn't already set externally (by Testcontainers)
+if not config.get_main_option("sqlalchemy.url"):
+    config.set_main_option("sqlalchemy.url", str(settings.db.async_dsn))
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 if config.config_file_name is not None:

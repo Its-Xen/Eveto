@@ -63,6 +63,7 @@ desktop.ini
 .ipynb_checkpoints/
 export-requirements.txt
 todo
+playground_*.py
 # Celery / Async task files (if you use them)
 celerybeat-schedule
 celerybeat.pid
