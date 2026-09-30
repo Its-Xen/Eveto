@@ -8,6 +8,7 @@ from app.db.base import Base
 
 if TYPE_CHECKING:
     from app.models.event import Event
+    from app.models.reservation import Reservation
 
 
 class TicketType(Base):
@@ -29,7 +30,10 @@ class TicketType(Base):
     sales_end_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
 
     # relationships
-    event: Mapped["Event"] = relationship(back_populates="tickets_created")
+    events_created: Mapped["Event"] = relationship(back_populates="tickets_created")
+    reservations_created: Mapped[list["Reservation"]] = relationship(
+        back_populates="tickets_created"
+    )
 
     @property
     def available_quantity(self) -> int:

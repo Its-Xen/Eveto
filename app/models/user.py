@@ -11,6 +11,7 @@ from app.db.base import Base
 # It prevents the circular import error
 if TYPE_CHECKING:
     from app.models.event import Event
+    from app.models.reservation import Reservation
     from app.models.venue import Venue
 
 
@@ -38,3 +39,6 @@ class User(Base):
     # relationships
     venues_created: Mapped[list["Venue"]] = relationship(back_populates="creator")
     events_created: Mapped[list["Event"]] = relationship(back_populates="creator")
+    reservations_created: Mapped[list["Reservation"]] = relationship(
+        back_populates="creator"
+    )
