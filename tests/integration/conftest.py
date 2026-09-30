@@ -3,11 +3,11 @@ import os
 
 import pytest
 import pytest_asyncio
+from alembic.config import Config
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from testcontainers.postgres import PostgresContainer
 
 from alembic import command
-from alembic.config import Config
 
 #! Disable Ryuk container to avoid Docker Desktop mount permission bugs
 os.environ["TESTCONTAINERS_RYUK_DISABLED"] = "true"
