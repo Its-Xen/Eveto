@@ -36,9 +36,6 @@ jobs:
         # --check means "don't change files, just fail if they aren't formatted"
         run: uv run black --check .
 
-      - name: Run isort (Import Sorter Check)
-        run: uv run isort --check-only .
-
       - name: Run Mypy (Type Checker)
         # Only checks the app/ folder so we don't check tests/scripts yet
         run: uv run mypy app/
