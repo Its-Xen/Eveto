@@ -44,4 +44,6 @@ class Event(Base):
     # relationships
     venue: Mapped["Venue"] = relationship(back_populates="events_created")
     creator: Mapped["User"] = relationship(back_populates="events_created")
-    tickets_created: Mapped[list["TicketType"]] = relationship(back_populates="event")
+    tickets_created: Mapped[list["TicketType"]] = relationship(
+        back_populates="events_created"
+    )

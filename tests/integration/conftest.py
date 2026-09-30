@@ -1,4 +1,5 @@
 import asyncio
+import os
 
 import pytest
 import pytest_asyncio
@@ -7,6 +8,9 @@ from testcontainers.postgres import PostgresContainer
 
 from alembic import command
 from alembic.config import Config
+
+#! Disable Ryuk container to avoid Docker Desktop mount permission bugs
+os.environ["TESTCONTAINERS_RYUK_DISABLED"] = "true"
 
 
 @pytest.fixture(scope="session")

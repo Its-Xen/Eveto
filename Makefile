@@ -30,13 +30,11 @@ migrate: ## Run alembic migrations
 lint: ## Run linters in check-only mode 
 	uv run ruff check .
 	uv run black --check .
-	uv run isort --check-only .
 	uv run mypy app/
 
 format: ## Auto-format and fix linting errors locally
 	uv run ruff check . --fix
 	uv run black .
-	uv run isort .
 
 check-all: ## Run pre-commit on ALL files 
 	uv run pre-commit run --all-files
