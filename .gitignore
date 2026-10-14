@@ -15,7 +15,6 @@ pyenv/
 
 # Environment Variables (CRITICAL for FastAPI secrets)
 .env
-.env.*
 !.env.example
 *.env
 
