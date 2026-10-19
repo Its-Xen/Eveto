@@ -5,6 +5,7 @@ Date: 2026-8-29 Status: Accepted
 Context
 
 Eveto requires a stateless authentication mechanism to handle user sessions and authorize API requests. JSON Web Tokens (JWTs) are the standard choice. However, the architecture includes multiple distinct components (the core FastAPI application, Dramatiq background workers, and a mock payment provider). We must choose a signing algorithm that allows any component to verify a token's authenticity without compromising the system's overall security if a less-critical component is breached.
+
 Options Considered
 1. HS256 (HMAC with SHA-256)
 

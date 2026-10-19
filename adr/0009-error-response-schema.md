@@ -5,6 +5,7 @@ Date: 2026-9-13 Status: Accepted
 Context
 
 When an API request fails (e.g., 404 Not Found, 401 Unauthorized, 422 Validation Error), the client needs a consistent, machine-readable format to understand what went wrong. Inconsistent error formats force frontend developers to write custom parsing logic for every endpoint.
+
 Options Considered
 1. FastAPI Default ({"detail": "..."})
 

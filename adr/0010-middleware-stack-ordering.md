@@ -5,6 +5,7 @@ Date: 2026-9-14 Status: Accepted
 Context
 
 FastAPI/Starlette executes middleware using the "Onion Model". The last middleware added is the outermost layer. A request passes down through the layers, hits the route, and the response passes back up through the layers in reverse. Getting this order wrong causes subtle bugs: missing headers in logs, incorrect timing metrics, or CORS failures.
+
 Decision
 
 We define the middleware stack in the following order (Outermost to Innermost):
