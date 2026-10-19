@@ -5,6 +5,7 @@ Date: 2026-9-22 Status: Accepted
 Context
 
 Integration tests need a database to verify SQL queries, constraints, and migrations. We need to choose how to provide this database during the testing phase without compromising the reliability of the tests or requiring developers to manually spin up databases.
+
 Options Considered
 1. SQLite In-Memory
 

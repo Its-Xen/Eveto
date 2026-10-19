@@ -1,10 +1,11 @@
-ADR-0013: Idempotency Key Design for Reservations
+ADR-0014: Idempotency Key Design for Reservations
 
 Date: 2026-9-30 Status: Accepted
 
 Context
 
 Networks are unreliable. If a user clicks "Buy Tickets" and their phone loses connection, they might click it again. If the API receives two POST /reservations requests, it must not create two reservations and double-charge the user. Similarly, the payment provider might retry a webhook delivery. We need a mechanism to safely retry requests without mutating the system state twice.
+
 Options Considered
 1. No Idempotency (Naive)
 

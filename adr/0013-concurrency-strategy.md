@@ -5,6 +5,7 @@ Date: 2026-9-30 Status: Accepted
 Context
 
 Eveto's core business logic is ticket reservation. During a flash sale, hundreds of users might attempt to buy the last few tickets for an event at the exact same millisecond. We must guarantee that total_quantity is never breached (overselling). Because we run multiple Uvicorn workers (processes), Python's asyncio.Lock is useless here. The locking must happen at the database level.
+
 Options Considered
 1. Pessimistic Locking (SELECT ... FOR UPDATE)
 

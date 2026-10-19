@@ -1,3 +1,4 @@
+import random
 from enum import Enum
 from pathlib import Path
 
@@ -44,7 +45,9 @@ class DatabaseSettings(BaseModel):
 
 class RedisSettings(BaseModel):
     url: RedisDsn
-    cache_ttl: int = 3600
+    ttl: int = 3600
+    jitter: int = random.randint(-30, 30)
+    cache_ttl: int = ttl + jitter
 
     @property
     def broker_url(self) -> str:

@@ -5,6 +5,7 @@ Date: 2026-9-13 Status: Accepted
 Context
 
 Eveto exposes list endpoints (GET /events, GET /admin/venues). Without pagination, querying these endpoints would return entire database tables. As the platform grows, this would consume excessive memory and network bandwidth, causing slow API responses and potential crashes.
+
 Options Considered
 1. Offset/Limit Pagination (Traditional)
 

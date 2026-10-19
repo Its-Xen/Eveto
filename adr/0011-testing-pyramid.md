@@ -5,6 +5,7 @@ Date: 2026-9-15 Status: Accepted
 Context
 
 Eveto requires a testing strategy that provides confidence in the system's correctness without slowing down the development pipeline. We need to balance fast, isolated unit tests with slower, realistic integration and contract tests.
+
 Options Considered
 1. The Testing Pyramid (Standard)
 

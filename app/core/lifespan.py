@@ -21,7 +21,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     # Initialize Redis connection pool and attach to app state
     app.state.redis = aioredis.from_url(str(settings.redis.url), decode_responses=True)
 
-    yield  # The app runs and handles requests here
+    yield  # * The app runs and handles requests here
 
     # ==========================================
     # SHUTDOWN: Code here runs when the app is stopping
