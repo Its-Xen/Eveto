@@ -1,9 +1,10 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Request, status
+from redis.asyncio import Redis
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.dependencies import require_role
+from app.core.dependencies import require_role, get_redis_client
 from app.db.session import get_db
 from app.models.event import Event
 from app.models.ticket_type import TicketType
@@ -87,12 +88,11 @@ async def admin_list_events(
 
 @router.post("/events", response_model=EventRead, status_code=status.HTTP_201_CREATED)
 async def create_event_api(
-    request: Request,
     event_in: EventCreate,
     db: Annotated[AsyncSession, Depends(get_db)],
+    redis: Annotated[Redis, Depends(get_redis_client)],
     current_user: Annotated[User, Depends(require_role(UserRole.admin))],
 ) -> Event:
-    redis = request.app.state.redis
     return await create_new_event(db, event_in, current_user.id, redis)
 
 
@@ -100,22 +100,20 @@ async def create_event_api(
 async def update_event_api(
     event_id: int,
     event_in: EventUpdate,
-    request: Request,
     db: Annotated[AsyncSession, Depends(get_db)],
+    redis: Annotated[Redis, Depends(get_redis_client)],
     current_user: Annotated[User, Depends(require_role(UserRole.admin))],
 ) -> Event:
-    redis = request.app.state.redis
     return await update_existing_event(db, event_id, event_in, redis)
 
 
 @router.delete("/events/{event_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_event_api(
-    request: Request,
     event_id: int,
     db: Annotated[AsyncSession, Depends(get_db)],
+    redis: Annotated[Redis, Depends(get_redis_client)],
     current_user: Annotated[User, Depends(require_role(UserRole.admin))],
 ) -> None:
-    redis = request.app.state.redis
     await delete_existing_event(db, event_id, redis)
     return None
 

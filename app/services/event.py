@@ -23,7 +23,7 @@ from app.schemas.event import EventCreate, EventRead, EventUpdate
 async def _get_cache_version(redis: Redis) -> int:
     """Helper to fetch current cache version."""
     version = await redis.get("events:version")
-    return int(version) if version else 1
+    return int(version) if version else 0
 
 
 #! Explicit Invalidation

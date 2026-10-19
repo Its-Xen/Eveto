@@ -1,7 +1,8 @@
 from typing import Annotated, Any, Awaitable, Callable
 
 import jwt
-from fastapi import Depends
+from fastapi import Depends, Request
+from redis.asyncio import Redis
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -54,3 +55,8 @@ def require_role(required_role: UserRole) -> Callable[..., Awaitable[User]]:
         return current_user
 
     return role_checker
+
+
+async def get_redis_client(request: Request) -> Redis:
+    """FastApi dependency to inject the redis client."""
+    return request.app.state.redis
