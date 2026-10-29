@@ -7,6 +7,7 @@ from app.core.exceptions import NotFoundError
 from app.models.reservation import Reservation, ReservationStatus
 from app.repositories.reservation import (
     create_reservation,
+    get_expired_reservations,
     get_reservation_by_id,
     get_reservation_by_idempotency_key,
     get_ticket_type_for_update,
@@ -94,3 +95,21 @@ async def cancel_exsiting_reservation(
 
     await save_changes(db, reservation)
     return reservation
+
+
+async def expire_stale_reservations(db: AsyncSession) -> int:
+    """Expires stale reservations and releases held inventory"""
+    expired_reservations = await get_expired_reservations(db)
+
+    for reservation in expired_reservations:
+        # ? Lock the ticket type row to safely release inventory
+        ticket_type = await get_ticket_type_for_update(db, reservation.ticket_type_id)
+
+        if ticket_type:
+            # Release the held inventory
+            ticket_type.reserved_quantity -= reservation.quantity
+            # Mark the reservation as expired
+            reservation.status = ReservationStatus.expired
+            await db.commit()
+
+    return len(expired_reservations)

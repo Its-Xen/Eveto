@@ -2,7 +2,7 @@ import random
 from enum import Enum
 from pathlib import Path
 
-from pydantic import BaseModel, Field, HttpUrl, PostgresDsn, RedisDsn, SecretStr
+from pydantic import BaseModel, Field, PostgresDsn, RedisDsn, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # 1. __file__ is:       Eveto/app/core/settings.py
@@ -72,7 +72,7 @@ class JWTSettings(BaseModel):
 
 
 class MockPaymentSettings(BaseModel):
-    base_url: HttpUrl
+    base_url: str
     api_key: SecretStr  # Secret: No default
 
 

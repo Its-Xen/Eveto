@@ -3,6 +3,7 @@ from app.models.reservation import Reservation
 from app.models.ticket_type import TicketType
 from app.models.user import User
 from app.models.venue import Venue
+from app.models.webhook_event import WebhookEvent
 
 # lifted those models up to the package level
-__all__ = ["User", "Venue", "Event", "TicketType", "Reservation"]
+__all__ = ["User", "Venue", "Event", "TicketType", "Reservation", "WebhookEvent"]

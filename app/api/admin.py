@@ -1,10 +1,14 @@
-from typing import Annotated
+import json
+from typing import Annotated, Any
 
-from redis.asyncio import Redis
+import redis.asyncio as aioredis
 from fastapi import APIRouter, Depends, status
+from redis.asyncio import Redis
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.dependencies import require_role, get_redis_client
+from app.core.dependencies import get_redis_client, require_role
+from app.core.settings import settings
+from app.core.tasks import expire_pending_reservations
 from app.db.session import get_db
 from app.models.event import Event
 from app.models.ticket_type import TicketType
@@ -158,3 +162,28 @@ async def delete_ticket_type_api(
 ) -> None:
     await delete_existing_ticket_type(db, ticket_type_id)
     return None
+
+
+# * Webhook Route
+@router.get("/dead-letters")
+async def get_dead_letters(
+    current_user: Annotated[User, Depends(require_role(UserRole.admin))],
+) -> list[dict[str, Any]]:
+    """Retrieve dead-lettered webhook events that failed after all retries"""
+    redis = aioredis.from_url(str(settings.redis.url), decode_responses=True)
+
+    # ? Get all items from the dead_letters list
+    dead_letters = await redis.lrange("dead_letters", 0, -1)
+
+    # Parse them back into JSON objects
+    return [json.loads(item) for item in dead_letters]
+
+
+# * Sweeper Route
+@router.post("/run-sweeper")
+async def run_sweeper(
+    current_user: Annotated[User, Depends(require_role(UserRole.admin))],
+) -> dict[str, str]:
+    """Manually trigger the stale reservation sweeper job."""
+    expire_pending_reservations.send()
+    return {"status": "accepted", "message": "Sweeper job enqueued."}
