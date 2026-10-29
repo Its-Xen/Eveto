@@ -1,8 +1,8 @@
 from typing import Annotated, Any
 
-from fastapi import APIRouter, Depends, Request
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import APIRouter, Depends
 from redis.asyncio import Redis
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.dependencies import get_redis_client
 from app.core.rate_limit import check_rate_limit

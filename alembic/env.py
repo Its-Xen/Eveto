@@ -5,6 +5,7 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
+#! This triggers the __init__.py to load all models into Base.metadata!
 from alembic import context
 from app.core.settings import settings
 from app.db.base import Base
