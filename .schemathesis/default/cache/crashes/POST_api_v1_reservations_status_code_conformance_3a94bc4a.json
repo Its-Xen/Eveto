@@ -1,0 +1,98 @@
+{
+  "operation": "POST /api/v1/reservations",
+  "method": "POST",
+  "path_template": "/api/v1/reservations",
+  "fingerprint": "3a94bc4a",
+  "case_id": "tbBShA",
+  "code_sample": "curl -X POST -H 'Idempotency-key: [Filtered]' -H 'Content-Type: application/json' -d '{\"quantity\": 1, \"ticket_type_id\": 1}' http://localhost:8000/api/v1/reservations",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost:8000/api/v1/reservations",
+      "url_template": "http://localhost:8000/api/v1/reservations",
+      "headers": {
+        "User-Agent": "schemathesis/4.24.3",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Idempotency-key": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "tbBShA",
+        "Content-Type": "application/json",
+        "Content-Length": "36"
+      },
+      "response": {
+        "status_code": 401,
+        "headers": {
+          "date": "Tue, 03 Nov 2026 15:18:08 GMT",
+          "server": "uvicorn",
+          "www-authenticate": "[Filtered]",
+          "content-length": "30",
+          "content-type": "application/json",
+          "x-response-time": "2.10ms",
+          "x-request-id": "3c1e9a17b62c425fa8fa76041db74367"
+        },
+        "body": "{\"detail\":\"Not authenticated\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 401\nDocumented: 201, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 4.2781000047398265e-05,
+          "mode": "negative"
+        },
+        "components": {
+          "HEADER": "negative",
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "Incorrect type",
+            "location": "/anyOf/1/type",
+            "parameter": "Idempotency-key",
+            "parameter_location": "HEADER",
+            "scenario": "incorrect_type"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [
+          [
+            "body",
+            "ticket_type_id"
+          ]
+        ],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {
+          "HEADER": {
+            "Idempotency-key": {}
+          }
+        }
+      },
+      "path": "/api/v1/reservations",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {
+        "Idempotency-key": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "quantity": 1,
+          "ticket_type_id": 1
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

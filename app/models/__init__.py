@@ -1,3 +1,4 @@
+from app.models.api_key import ApiKey
 from app.models.event import Event
 from app.models.reservation import Reservation
 from app.models.ticket_type import TicketType
@@ -6,4 +7,12 @@ from app.models.venue import Venue
 from app.models.webhook_event import WebhookEvent
 
 # lifted those models up to the package level
-__all__ = ["User", "Venue", "Event", "TicketType", "Reservation", "WebhookEvent"]
+__all__ = [
+    "User",
+    "Venue",
+    "Event",
+    "TicketType",
+    "Reservation",
+    "WebhookEvent",
+    "ApiKey",
+]

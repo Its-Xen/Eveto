@@ -1,0 +1,85 @@
+{
+  "operation": "POST /api/v1/admin/venues",
+  "method": "POST",
+  "path_template": "/api/v1/admin/venues",
+  "fingerprint": "14856205",
+  "case_id": "iB4Ibm",
+  "code_sample": "curl -X POST -H 'Content-Type: application/json' -d '{\"name\": \"Madison Square Garden\", \"address\": \"4 Pennsylvania Plaza\", \"city\": \"New York\", \"capacity\": 3000}' http://localhost:8000/api/v1/admin/venues",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost:8000/api/v1/admin/venues",
+      "url_template": "http://localhost:8000/api/v1/admin/venues",
+      "headers": {
+        "User-Agent": "schemathesis/4.24.3",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "iB4Ibm",
+        "Content-Type": "application/json",
+        "Content-Length": "106"
+      },
+      "response": {
+        "status_code": 401,
+        "headers": {
+          "date": "Tue, 03 Nov 2026 15:18:06 GMT",
+          "server": "uvicorn",
+          "www-authenticate": "[Filtered]",
+          "content-length": "30",
+          "content-type": "application/json",
+          "x-response-time": "1.83ms",
+          "x-request-id": "e8e855610e594d8092366548e780d2ce"
+        },
+        "body": "{\"detail\":\"Not authenticated\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 401\nDocumented: 201, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.0002936849996331148,
+          "mode": "positive"
+        },
+        "components": {},
+        "phase": {
+          "name": "examples",
+          "data": {
+            "type": "ExamplesPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/api/v1/admin/venues",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "name": "Madison Square Garden",
+          "address": "4 Pennsylvania Plaza",
+          "city": "New York",
+          "capacity": 3000
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

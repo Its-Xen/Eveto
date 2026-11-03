@@ -1,0 +1,87 @@
+{
+  "operation": "GET /api/v1/admin/events",
+  "method": "GET",
+  "path_template": "/api/v1/admin/events",
+  "fingerprint": "3ce5b32e",
+  "case_id": "0SAmXY",
+  "code_sample": "curl -X GET 'http://localhost:8000/api/v1/admin/events?skip=0&x-schemathesis-unknown-property=42'",
+  "sequence": [
+    {
+      "method": "GET",
+      "url": "http://localhost:8000/api/v1/admin/events?skip=0&x-schemathesis-unknown-property=42",
+      "url_template": "http://localhost:8000/api/v1/admin/events",
+      "headers": {
+        "User-Agent": "schemathesis/4.24.3",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "0SAmXY"
+      },
+      "response": {
+        "status_code": 401,
+        "headers": {
+          "date": "Tue, 03 Nov 2026 15:18:08 GMT",
+          "server": "uvicorn",
+          "www-authenticate": "[Filtered]",
+          "content-length": "30",
+          "content-type": "application/json",
+          "x-response-time": "1.10ms",
+          "x-request-id": "aef362fa371f4c478833c56d0129bdd8"
+        },
+        "body": "{\"detail\":\"Not authenticated\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 401\nDocumented: 200, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 5.656099983752938e-05,
+          "mode": "negative"
+        },
+        "components": {
+          "QUERY": "negative"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "Object with unexpected properties",
+            "location": null,
+            "parameter": null,
+            "parameter_location": "QUERY",
+            "scenario": "object_unexpected_properties"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {
+          "QUERY": {
+            "skip": 0,
+            "x-schemathesis-unknown-property": 42
+          }
+        }
+      },
+      "path": "/api/v1/admin/events",
+      "path_parameters": {},
+      "query": {
+        "skip": "0",
+        "x-schemathesis-unknown-property": "42"
+      },
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

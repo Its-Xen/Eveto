@@ -1,0 +1,91 @@
+{
+  "operation": "GET /api/v1/events/{event_id}",
+  "method": "GET",
+  "path_template": "/api/v1/events/{event_id}",
+  "fingerprint": "a15548b0",
+  "case_id": "j9uRGU",
+  "code_sample": "curl -X GET http://localhost:8000/api/v1/events/1",
+  "sequence": [
+    {
+      "method": "GET",
+      "url": "http://localhost:8000/api/v1/events/1",
+      "url_template": "http://localhost:8000/api/v1/events/{event_id}",
+      "headers": {
+        "User-Agent": "schemathesis/4.24.3",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "j9uRGU"
+      },
+      "response": {
+        "status_code": 429,
+        "headers": {
+          "date": "Tue, 03 Nov 2026 15:18:10 GMT",
+          "server": "uvicorn",
+          "retry-after": "49",
+          "content-length": "66",
+          "content-type": "application/json",
+          "x-response-time": "1.78ms",
+          "x-request-id": "96c6a8d1c067437d89a8ebd2810e724a"
+        },
+        "body": "{\"detail\":\"Rate limit exceeded. Limit is 20 requests per minute.\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 429\nDocumented: 200, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.006523491999359976,
+          "mode": "positive"
+        },
+        "components": {
+          "PATH": "positive",
+          "HEADER": "positive"
+        },
+        "phase": {
+          "name": "fuzzing",
+          "data": {
+            "type": "FuzzingPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [
+          {
+            "location": "path",
+            "parameter_name": "event_id",
+            "resource_name": "EventRead",
+            "resource_field": "id",
+            "source_operation": "GET /api/v1/events",
+            "source_status": 200
+          }
+        ],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/api/v1/events/{event_id}",
+      "path_parameters": {
+        "event_id": 1
+      },
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

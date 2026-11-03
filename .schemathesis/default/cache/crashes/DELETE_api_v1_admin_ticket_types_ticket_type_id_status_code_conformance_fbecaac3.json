@@ -1,0 +1,91 @@
+{
+  "operation": "DELETE /api/v1/admin/ticket-types/{ticket_type_id}",
+  "method": "DELETE",
+  "path_template": "/api/v1/admin/ticket-types/{ticket_type_id}",
+  "fingerprint": "fbecaac3",
+  "case_id": "heo5yx",
+  "code_sample": "curl -X DELETE http://localhost:8000/api/v1/admin/ticket-types/null%2Cnull",
+  "sequence": [
+    {
+      "method": "DELETE",
+      "url": "http://localhost:8000/api/v1/admin/ticket-types/null%2Cnull",
+      "url_template": "http://localhost:8000/api/v1/admin/ticket-types/{ticket_type_id}",
+      "headers": {
+        "User-Agent": "schemathesis/4.24.3",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "heo5yx",
+        "Content-Length": "0"
+      },
+      "response": {
+        "status_code": 401,
+        "headers": {
+          "date": "Tue, 03 Nov 2026 15:18:09 GMT",
+          "server": "uvicorn",
+          "www-authenticate": "[Filtered]",
+          "content-length": "30",
+          "content-type": "application/json",
+          "x-response-time": "1.17ms",
+          "x-request-id": "efbe58236e8a4a598343bef1607fb247"
+        },
+        "body": "{\"detail\":\"Not authenticated\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 401\nDocumented: 204, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 2.8438000299502164e-05,
+          "mode": "negative"
+        },
+        "components": {
+          "PATH": "negative"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "Incorrect type",
+            "location": "/type",
+            "parameter": "ticket_type_id",
+            "parameter_location": "PATH",
+            "scenario": "incorrect_type"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [
+          [
+            "path",
+            "ticket_type_id"
+          ]
+        ],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {
+          "PATH": {
+            "ticket_type_id": "null,null"
+          }
+        }
+      },
+      "path": "/api/v1/admin/ticket-types/{ticket_type_id}",
+      "path_parameters": {
+        "ticket_type_id": "null%2Cnull"
+      },
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}
