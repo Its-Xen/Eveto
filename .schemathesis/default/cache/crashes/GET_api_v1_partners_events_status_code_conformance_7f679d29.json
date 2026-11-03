@@ -1,0 +1,93 @@
+{
+  "operation": "GET /api/v1/partners/events",
+  "method": "GET",
+  "path_template": "/api/v1/partners/events",
+  "fingerprint": "7f679d29",
+  "case_id": "3NHxFG",
+  "code_sample": "curl -X GET -H 'X-API-Key: [Filtered]' 'http://localhost:8000/api/v1/partners/events?skip=0&x-schemathesis-unknown-property=42'",
+  "sequence": [
+    {
+      "method": "GET",
+      "url": "http://localhost:8000/api/v1/partners/events?skip=0&x-schemathesis-unknown-property=42",
+      "url_template": "http://localhost:8000/api/v1/partners/events",
+      "headers": {
+        "User-Agent": "schemathesis/4.24.3",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-API-Key": "[Filtered]",
+        "X-Schemathesis-TestCaseId": "3NHxFG"
+      },
+      "response": {
+        "status_code": 401,
+        "headers": {
+          "date": "Tue, 03 Nov 2026 15:18:09 GMT",
+          "server": "uvicorn",
+          "content-length": "28",
+          "content-type": "application/json",
+          "x-response-time": "3.58ms",
+          "x-request-id": "3d0655bf42384287ae2a605dafbd0ad6"
+        },
+        "body": "{\"detail\":\"Missing API Key\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 401\nDocumented: 200, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 6.0430000303313136e-05,
+          "mode": "negative"
+        },
+        "components": {
+          "HEADER": "positive",
+          "QUERY": "negative"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "Object with unexpected properties",
+            "location": null,
+            "parameter": null,
+            "parameter_location": "QUERY",
+            "scenario": "object_unexpected_properties"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {
+          "HEADER": {
+            "X-API-Key": ""
+          },
+          "QUERY": {
+            "skip": 0,
+            "x-schemathesis-unknown-property": 42
+          }
+        }
+      },
+      "path": "/api/v1/partners/events",
+      "path_parameters": {},
+      "query": {
+        "skip": "0",
+        "x-schemathesis-unknown-property": "42"
+      },
+      "case_headers": {
+        "X-API-Key": "[Filtered]"
+      },
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

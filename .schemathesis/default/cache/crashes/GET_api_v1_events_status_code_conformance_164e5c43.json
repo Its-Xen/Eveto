@@ -1,0 +1,80 @@
+{
+  "operation": "GET /api/v1/events",
+  "method": "GET",
+  "path_template": "/api/v1/events",
+  "fingerprint": "164e5c43",
+  "case_id": "rUvotH",
+  "code_sample": "curl -X GET http://localhost:8000/api/v1/events",
+  "sequence": [
+    {
+      "method": "GET",
+      "url": "http://localhost:8000/api/v1/events",
+      "url_template": "http://localhost:8000/api/v1/events",
+      "headers": {
+        "User-Agent": "schemathesis/4.24.3",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "rUvotH"
+      },
+      "response": {
+        "status_code": 429,
+        "headers": {
+          "date": "Tue, 03 Nov 2026 15:18:13 GMT",
+          "server": "uvicorn",
+          "retry-after": "46",
+          "content-length": "66",
+          "content-type": "application/json",
+          "x-response-time": "1.49ms",
+          "x-request-id": "d382b8a382aa413db7a5cb57230b9810"
+        },
+        "body": "{\"detail\":\"Rate limit exceeded. Limit is 20 requests per minute.\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 429\nDocumented: 200, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.008610662999672059,
+          "mode": "positive"
+        },
+        "components": {
+          "QUERY": "positive",
+          "HEADER": "positive"
+        },
+        "phase": {
+          "name": "stateful",
+          "data": {
+            "type": "StatefulPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/api/v1/events",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

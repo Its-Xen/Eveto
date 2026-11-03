@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.api import admin, auth, event, reservation, webhooks
+from app.api import admin, auth, event, partners, reservation, webhooks
 
 api_router = APIRouter()
 api_router.include_router(auth.router, prefix="/auth", tags=["Auth"])
@@ -10,3 +10,4 @@ api_router.include_router(
     reservation.router, prefix="/reservations", tags=["Reservations"]
 )
 api_router.include_router(webhooks.router, prefix="/webhooks", tags=["Webhooks"])
+api_router.include_router(partners.router, prefix="/partners", tags=["Partners"])

@@ -1,7 +1,8 @@
+import hashlib
 from typing import Annotated, Any, Awaitable, Callable
 
 import jwt
-from fastapi import Depends, Request
+from fastapi import Depends, Header, HTTPException, Request, status
 from fastapi.security import OAuth2PasswordBearer
 from redis.asyncio import Redis
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -9,7 +10,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.exceptions import get_credentials_exception, get_forbidden_exception
 from app.core.settings import settings
 from app.db.session import get_db
+from app.models.api_key import ApiKey
 from app.models.user import User, UserRole
+from app.repositories.api_key import get_api_key_by_hash
 from app.repositories.user import get_user_by_id
 
 # This tells FastAPI how to extract the token from the request header.
@@ -61,3 +64,36 @@ async def get_redis_client(request: Request) -> Redis:
     """FastApi dependency to inject the redis client."""
     redis_client = request.app.state.redis
     return redis_client  # type: ignore[no-any-return]
+
+
+async def get_api_key_user(
+    x_api_key: Annotated[str | None, Header(alias="X-API-Key")] = None,
+    db: AsyncSession = Depends(get_db),
+) -> ApiKey:
+    """Dependency to authenticate partners via API Key."""
+    if not x_api_key:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Missing API Key"
+        )
+
+    # Hash the incoming key (SHA-256 if sufficient for API keys)
+    key_hash = hashlib.sha256(x_api_key.encode()).hexdigest()
+
+    api_key = await get_api_key_by_hash(db, key_hash)
+    if not api_key:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid API key"
+        )
+
+    return api_key
+
+
+async def get_optional_api_key_user(
+    x_api_key: Annotated[str | None, Header(alias="X-API-Key")] = None,
+    db: AsyncSession = Depends(get_db),
+) -> ApiKey | None:
+    """Optional dependency. Returns None if no API key is provided."""
+    if not x_api_key:
+        return None
+    key_hash = hashlib.sha256(x_api_key.encode()).hexdigest()
+    return await get_api_key_by_hash(db, key_hash)

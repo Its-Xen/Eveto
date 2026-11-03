@@ -1,0 +1,80 @@
+{
+  "operation": "GET /api/v1/events",
+  "method": "GET",
+  "path_template": "/api/v1/events",
+  "fingerprint": "734ca054",
+  "case_id": "d3sw51",
+  "code_sample": "curl -X GET 'http://localhost:8000/api/v1/events?skip=28712015126641283956736&limit=83'",
+  "sequence": [
+    {
+      "method": "GET",
+      "url": "http://localhost:8000/api/v1/events?skip=28712015126641283956736&limit=83",
+      "url_template": "http://localhost:8000/api/v1/events",
+      "headers": {
+        "User-Agent": "schemathesis/4.24.3",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "d3sw51"
+      },
+      "response": {
+        "status_code": 500,
+        "headers": {
+          "date": "Tue, 03 Nov 2026 15:18:10 GMT",
+          "server": "uvicorn",
+          "content-length": "21",
+          "content-type": "text/plain; charset=utf-8"
+        },
+        "body": "Internal Server Error"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 500\nDocumented: 200, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.0031385680003950256,
+          "mode": "positive"
+        },
+        "components": {
+          "QUERY": "positive",
+          "HEADER": "positive"
+        },
+        "phase": {
+          "name": "fuzzing",
+          "data": {
+            "type": "FuzzingPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/api/v1/events",
+      "path_parameters": {},
+      "query": {
+        "skip": 28712015126641283956736,
+        "limit": 83
+      },
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

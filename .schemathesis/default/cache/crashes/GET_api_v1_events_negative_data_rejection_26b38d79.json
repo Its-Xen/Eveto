@@ -1,0 +1,112 @@
+{
+  "operation": "GET /api/v1/events",
+  "method": "GET",
+  "path_template": "/api/v1/events",
+  "fingerprint": "26b38d79",
+  "case_id": "PNghrp",
+  "code_sample": "curl -X GET 'http://localhost:8000/api/v1/events?limit=null&skip=-20940284878'",
+  "sequence": [
+    {
+      "method": "GET",
+      "url": "http://localhost:8000/api/v1/events?limit=null&skip=-20940284878",
+      "url_template": "http://localhost:8000/api/v1/events",
+      "headers": {
+        "User-Agent": "schemathesis/4.24.3",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "PNghrp"
+      },
+      "response": {
+        "status_code": 429,
+        "headers": {
+          "date": "Tue, 03 Nov 2026 09:58:56 GMT",
+          "server": "uvicorn",
+          "retry-after": "58",
+          "content-length": "54",
+          "content-type": "application/json",
+          "x-response-time": "0.91ms",
+          "x-request-id": "23601ba2d2b54fc0b376f3cc2eef952e"
+        },
+        "body": "{\"detail\":\"Too many requests, Please try again later\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "negative_data_rejection",
+          "status": "failure",
+          "message": "API accepted schema-violating request\n\nInvalid data should have been rejected\nExpected: 400, 401, 403, 404, 405, 406, 409, 422, 428, 5xx\nInvalid component: in query\n  - violates `type` at /properties/limit (was integer, became null)\n  - violates `minimum`, `default` at /properties/skip"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.004975002999344724,
+          "mode": "negative"
+        },
+        "components": {
+          "QUERY": "negative"
+        },
+        "phase": {
+          "name": "fuzzing",
+          "data": {
+            "type": "FuzzingPhaseData",
+            "description": "- violates `type` at /properties/limit (was integer, became null)\n- violates `minimum`, `default` at /properties/skip",
+            "location": null,
+            "parameter": null,
+            "parameter_location": "QUERY",
+            "mutations": [
+              {
+                "path": [
+                  "limit"
+                ],
+                "schema_pointer": "/properties/limit",
+                "channel": "schema",
+                "operator": "change_type",
+                "keywords": [
+                  "type"
+                ],
+                "parameter": "limit",
+                "original_value": "integer",
+                "new_value": "null"
+              },
+              {
+                "path": [
+                  "skip"
+                ],
+                "schema_pointer": "/properties/skip",
+                "channel": "schema",
+                "operator": "negate_constraints",
+                "keywords": [
+                  "minimum",
+                  "default"
+                ],
+                "parameter": "skip",
+                "original_value": null,
+                "new_value": null
+              }
+            ]
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/api/v1/events",
+      "path_parameters": {},
+      "query": {
+        "limit": "null",
+        "skip": -20940284878
+      },
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "none"
+      },
+      "media_type": null,
+      "parent_index": null
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "operation": "POST /api/v1/admin/ticket-types",
+  "method": "POST",
+  "path_template": "/api/v1/admin/ticket-types",
+  "fingerprint": "4df819ab",
+  "case_id": "p0t3TI",
+  "code_sample": "curl -X POST -H 'Content-Type: application/json' -d '{\"event_id\": 1, \"name\": \"VIP Pass\", \"price_cents\": 50000, \"currency\": \"USD\", \"total_quantity\": 100, \"sales_start_at\": \"2000-01-01T00:00:00Z\", \"sales_end_at\": \"2000-01-01T00:00:00Z\"}' http://localhost:8000/api/v1/admin/ticket-types",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost:8000/api/v1/admin/ticket-types",
+      "url_template": "http://localhost:8000/api/v1/admin/ticket-types",
+      "headers": {
+        "User-Agent": "schemathesis/4.24.3",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "p0t3TI",
+        "Content-Type": "application/json",
+        "Content-Length": "181"
+      },
+      "response": {
+        "status_code": 401,
+        "headers": {
+          "date": "Tue, 03 Nov 2026 15:18:06 GMT",
+          "server": "uvicorn",
+          "www-authenticate": "[Filtered]",
+          "content-length": "30",
+          "content-type": "application/json",
+          "x-response-time": "2.00ms",
+          "x-request-id": "f0c8f1fe08b74202ac25aa7fe6e16b39"
+        },
+        "body": "{\"detail\":\"Not authenticated\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 401\nDocumented: 201, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.0002013200000874349,
+          "mode": "positive"
+        },
+        "components": {},
+        "phase": {
+          "name": "examples",
+          "data": {
+            "type": "ExamplesPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/api/v1/admin/ticket-types",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "event_id": 1,
+          "name": "VIP Pass",
+          "price_cents": 50000,
+          "currency": "USD",
+          "total_quantity": 100,
+          "sales_start_at": "2000-01-01T00:00:00Z",
+          "sales_end_at": "2000-01-01T00:00:00Z"
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

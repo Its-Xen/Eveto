@@ -1,0 +1,85 @@
+{
+  "operation": "POST /api/v1/auth/login",
+  "method": "POST",
+  "path_template": "/api/v1/auth/login",
+  "fingerprint": "5bd9fc8f",
+  "case_id": "Jj9cHj",
+  "code_sample": "curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' -d 'password=0&username=0' http://localhost:8000/api/v1/auth/login",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost:8000/api/v1/auth/login",
+      "url_template": "http://localhost:8000/api/v1/auth/login",
+      "headers": {
+        "User-Agent": "schemathesis/4.24.3",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "Jj9cHj",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Length": "21"
+      },
+      "response": {
+        "status_code": 401,
+        "headers": {
+          "date": "Tue, 03 Nov 2026 15:18:10 GMT",
+          "server": "uvicorn",
+          "www-authenticate": "[Filtered]",
+          "content-length": "41",
+          "content-type": "application/json",
+          "x-response-time": "17.27ms",
+          "x-request-id": "71084eaac4604d3a884d6304bd24fec6"
+        },
+        "body": "{\"detail\":\"Incorrect email or password.\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 401\nDocumented: 200, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.008380576000490692,
+          "mode": "positive"
+        },
+        "components": {
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "fuzzing",
+          "data": {
+            "type": "FuzzingPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/api/v1/auth/login",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "password": "[Filtered]",
+          "username": "0"
+        }
+      },
+      "media_type": "application/x-www-form-urlencoded",
+      "parent_index": null
+    }
+  ]
+}

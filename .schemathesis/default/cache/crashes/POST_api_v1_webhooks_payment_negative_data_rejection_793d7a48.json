@@ -1,0 +1,94 @@
+{
+  "operation": "POST /api/v1/webhooks/payment",
+  "method": "POST",
+  "path_template": "/api/v1/webhooks/payment",
+  "fingerprint": "793d7a48",
+  "case_id": "vuvTrM",
+  "code_sample": "curl -X POST -H 'Content-Type: application/json' -d '{\"provider_event_id\": \"\", \"reservation_id\": false, \"status\": \"\"}' http://localhost:8000/api/v1/webhooks/payment",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost:8000/api/v1/webhooks/payment",
+      "url_template": "http://localhost:8000/api/v1/webhooks/payment",
+      "headers": {
+        "User-Agent": "schemathesis/4.24.3",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "vuvTrM",
+        "Content-Type": "application/json",
+        "Content-Length": "64"
+      },
+      "response": {
+        "status_code": 200,
+        "headers": {
+          "date": "Tue, 03 Nov 2026 15:18:08 GMT",
+          "server": "uvicorn",
+          "content-length": "22",
+          "content-type": "application/json",
+          "x-response-time": "12.14ms",
+          "x-request-id": "8a11550d98574c33a566dd7332c20fd0"
+        },
+        "body": "{\"status\":\"processed\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "negative_data_rejection",
+          "status": "failure",
+          "message": "API accepted schema-violating request\n\nInvalid data should have been rejected\nExpected: 400, 401, 403, 404, 405, 406, 409, 422, 428, 5xx\nInvalid component: in body - reservation_id: Incorrect type"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 1.808299930416979e-05,
+          "mode": "negative"
+        },
+        "components": {
+          "BODY": "negative"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "reservation_id: Incorrect type",
+            "location": "/properties/reservation_id/type",
+            "parameter": "application/json",
+            "parameter_location": "BODY",
+            "scenario": "incorrect_type"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [
+          [
+            "body",
+            "provider_event_id"
+          ],
+          [
+            "body",
+            "reservation_id"
+          ]
+        ],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/api/v1/webhooks/payment",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "provider_event_id": "",
+          "reservation_id": false,
+          "status": ""
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

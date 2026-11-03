@@ -1,40 +1,46 @@
 import time
-from collections import defaultdict
+from typing import Annotated
 
-from fastapi import HTTPException, Request, status
+from fastapi import Depends, HTTPException, Request, status
+from redis.asyncio import Redis
 
-# * In-memory store: {ip_address: [timestamp1, timestamp2, ...]}
-# * NOTE: This resets if the server restarts and doesn't work across multiple workers.
-#! It will be replaced by a Redis-backed limiter in Week 11.
-
-_in_memory_store: dict[str, list[float]] = defaultdict(list)
-RATE_LIMIT = 20  # 20 req
-RATE_WINDOW = 60  # per 60 sec
+from app.core.dependencies import get_optional_api_key_user, get_redis_client
+from app.models.api_key import ApiKey
 
 
-async def check_rate_limit(request: Request) -> None:
-    """Naive rate limiter for public endpoints."""
+async def check_redis_rate_limit(
+    request: Request,
+    redis: Annotated[Redis, Depends(get_redis_client)],
+    api_key: Annotated[ApiKey | None, Depends(get_optional_api_key_user)] = None,
+) -> None:
+    """Redis-backed rate limiter. Limits by API Key (if present) or IP Address."""
 
-    # Get client IP
-    client_ip = request.client.host if request.client else "unknown"
-    now = time.time()
+    # * Identify the client
+    if api_key:
+        client_id = f"partner:{api_key.id}"
+        limit = api_key.rate_limit_tier  # 10 req/min
+    else:
+        client_ip = request.client.host if request.client else "unknown"
+        client_id = f"ip:{client_ip}"
+        limit = 20  # Public endpoints get 20 req/min
 
-    # Filter out timestamps older than our window
-    _in_memory_store[client_ip] = [
-        t for t in _in_memory_store[client_ip] if now - t < RATE_WINDOW
-    ]
+    # * Create a unique Redis key for this minute
+    current_minute = int(time.time() // 60)
+    redis_key = f"rate_limit: {client_id}:{current_minute}"
 
-    # Check if limit exceeded
-    if len(_in_memory_store[client_ip]) >= RATE_LIMIT:
+    # * Increment the request count
+    count = await redis.incr(redis_key)
+
+    # * If it's the first reqeust, set the TTL to 60 sec
+    if count == 1:
+        await redis.expire(redis_key, 60)
+
+    # ? Check if limit exceeded
+    if count > limit:
+        # Calculate retry-after (seconds left in the minute)
+        retry_after = 60 - int(time.time() % 60)
         raise HTTPException(
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,
-            detail="Too many requests, Please try again later",
-            headers={
-                "Retry-After": str(
-                    int(RATE_WINDOW - (now - _in_memory_store[client_ip][0]))
-                )
-            },
+            detail=f"Rate limit exceeded. Limit is {limit} requests per minute.",
+            headers={"Retry-After": str(retry_after)},
         )
-
-    # Record this request, ex:_in_memory_store["127.0.0.1"].append(1715469120.123)
-    _in_memory_store[client_ip].append(now)

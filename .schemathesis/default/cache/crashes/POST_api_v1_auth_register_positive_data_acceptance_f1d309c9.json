@@ -1,0 +1,85 @@
+{
+  "operation": "POST /api/v1/auth/register",
+  "method": "POST",
+  "path_template": "/api/v1/auth/register",
+  "fingerprint": "f1d309c9",
+  "case_id": "RXiIWC",
+  "code_sample": "curl -X POST -H 'Content-Type: application/json' -d '{\"email\": \"0@a.com\", \"full_name\": \"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\", \"password\": \"00000000\"}' http://localhost:8000/api/v1/auth/register",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost:8000/api/v1/auth/register",
+      "url_template": "http://localhost:8000/api/v1/auth/register",
+      "headers": {
+        "User-Agent": "schemathesis/4.24.3",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "RXiIWC",
+        "Content-Type": "application/json",
+        "Content-Length": "160"
+      },
+      "response": {
+        "status_code": 400,
+        "headers": {
+          "date": "Tue, 03 Nov 2026 15:18:07 GMT",
+          "server": "uvicorn",
+          "content-length": "38",
+          "content-type": "application/json",
+          "x-response-time": "130.47ms",
+          "x-request-id": "d9a9adb02aea4f83ad2d59d245e8e3cf"
+        },
+        "body": "{\"detail\":\"Email already registered.\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "positive_data_acceptance",
+          "status": "failure",
+          "message": "API rejected schema-compliant request\n\nValid data should have been accepted\nExpected: 2xx, 401, 403, 404, 409, 5xx"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.002205986000262783,
+          "mode": "positive"
+        },
+        "components": {
+          "BODY": "positive"
+        },
+        "phase": {
+          "name": "coverage",
+          "data": {
+            "type": "CoveragePhaseData",
+            "description": "Object with valid 'full_name' value: Near-boundary length string",
+            "location": null,
+            "parameter": "application/json",
+            "parameter_location": "BODY",
+            "scenario": "valid_object"
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/api/v1/auth/register",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "email": "0@a.com",
+          "full_name": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "password": "[Filtered]"
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}

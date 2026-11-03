@@ -1,0 +1,87 @@
+{
+  "operation": "POST /api/v1/admin/events",
+  "method": "POST",
+  "path_template": "/api/v1/admin/events",
+  "fingerprint": "cfe2363e",
+  "case_id": "HmT49b",
+  "code_sample": "curl -X POST -H 'Content-Type: application/json' -d '{\"venue_id\": 1, \"title\": \"Summer Music Festival\", \"description\": \"A great outdoor event\", \"starts_at\": \"2024-12-31T20:00:00Z\", \"ends_at\": \"2025-01-01T01:00:00Z\", \"status\": \"draft\"}' http://localhost:8000/api/v1/admin/events",
+  "sequence": [
+    {
+      "method": "POST",
+      "url": "http://localhost:8000/api/v1/admin/events",
+      "url_template": "http://localhost:8000/api/v1/admin/events",
+      "headers": {
+        "User-Agent": "schemathesis/4.24.3",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "X-Schemathesis-TestCaseId": "HmT49b",
+        "Content-Type": "application/json",
+        "Content-Length": "180"
+      },
+      "response": {
+        "status_code": 401,
+        "headers": {
+          "date": "Tue, 03 Nov 2026 15:18:06 GMT",
+          "server": "uvicorn",
+          "www-authenticate": "[Filtered]",
+          "content-length": "30",
+          "content-type": "application/json",
+          "x-response-time": "2.21ms",
+          "x-request-id": "8bc316c295dc4763983162972259b68e"
+        },
+        "body": "{\"detail\":\"Not authenticated\"}"
+      },
+      "link": null,
+      "checks": [
+        {
+          "name": "status_code_conformance",
+          "status": "failure",
+          "message": "Undocumented HTTP status code\n\nReceived: 401\nDocumented: 201, 422"
+        }
+      ],
+      "meta": {
+        "generation": {
+          "time": 0.0003873010000461363,
+          "mode": "positive"
+        },
+        "components": {},
+        "phase": {
+          "name": "examples",
+          "data": {
+            "type": "ExamplesPhaseData",
+            "description": "Positive test case",
+            "location": null,
+            "parameter": null,
+            "parameter_location": null,
+            "mutations": []
+          }
+        },
+        "pool_draws": [],
+        "pool_misses": [],
+        "semantic_draws": [],
+        "dictionary_draws": [],
+        "constants_draws": [],
+        "raw_containers": {}
+      },
+      "path": "/api/v1/admin/events",
+      "path_parameters": {},
+      "query": {},
+      "case_headers": {},
+      "cookies": {},
+      "case_body": {
+        "encoding": "json",
+        "value": {
+          "venue_id": 1,
+          "title": "Summer Music Festival",
+          "description": "A great outdoor event",
+          "starts_at": "2024-12-31T20:00:00Z",
+          "ends_at": "2025-01-01T01:00:00Z",
+          "status": "draft"
+        }
+      },
+      "media_type": "application/json",
+      "parent_index": null
+    }
+  ]
+}
