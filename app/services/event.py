@@ -5,6 +5,7 @@ from redis.asyncio import Redis
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.exceptions import NotFoundError
+from app.core.metrics import cache_hits_total, cache_misses_total
 from app.core.settings import settings
 from app.models.event import Event
 from app.repositories.event import (
@@ -53,10 +54,12 @@ async def list_published_events(
     # * Check Cache
     cached = await redis.get(cache_key)
     if cached:
+        cache_hits_total.inc()
         # ? Use cast to tell mypy exactly what json.loads is returning
         return cast(list[dict[str, Any]], json.loads(cached))  # Cache Hit
 
     # * Check Cache Miss
+    cache_misses_total.inc()
     events = await get_published_events(db, skip, limit)
     events_data = [EventRead.model_validate(e).model_dump(mode="json") for e in events]
 
@@ -74,9 +77,11 @@ async def get_published_event_or_404(
 
     cached = await redis.get(cached_key)
     if cached:
+        cache_hits_total.inc()
         return cast(dict[str, Any], json.loads(cached))  # Cache Hit
 
     # * Query for cache miss
+    cache_misses_total.inc()
     event = await get_published_event_by_id(db, event_id)
     if not event:
         raise NotFoundError(detail="Event not found")

@@ -4,6 +4,7 @@ from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.exceptions import NotFoundError
+from app.core.metrics import reservation_conflicts_total
 from app.models.reservation import Reservation, ReservationStatus
 from app.repositories.reservation import (
     create_reservation,
@@ -40,6 +41,7 @@ async def create_new_reservation(
 
     # * Check Availability
     if ticket_type.available_quantity < reservation_in.quantity:
+        reservation_conflicts_total.inc()
         detail_msg = (
             f"Not enough tickets available. "
             f"Requested: {reservation_in.quantity}, "

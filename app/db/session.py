@@ -2,6 +2,7 @@ from typing import AsyncGenerator
 
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
+from app.core.metrics import active_db_connections
 from app.core.settings import settings
 
 engine = create_async_engine(
@@ -20,9 +21,11 @@ AsyncSessionLocal = async_sessionmaker(
 
 
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
+    active_db_connections.inc()
     async with AsyncSessionLocal() as session:
         try:
             yield session
         except Exception:
             await session.rollback()
             raise
+    active_db_connections.dec()

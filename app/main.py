@@ -1,19 +1,39 @@
 # from prometheus_fastapi_instrumentator import Instrumentator
+from collections.abc import Mapping, MutableMapping
+from typing import Any
+
 import structlog
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
+from opentelemetry import trace
+from prometheus_fastapi_instrumentator import Instrumentator
 from structlog.contextvars import merge_contextvars
 
 from app.api import api_router
 from app.core.lifespan import lifespan
 from app.core.middleware import RequestIDMiddleware, TimingMiddleware
 from app.core.settings import settings
+from app.core.tracing import setup_tracing
+
+
+# ? Custom processor to injct OTel trace_id into logs
+def inject_trace_info(
+    logger: Any, method_name: str, event_dict: MutableMapping[str, Any]
+) -> Mapping[str, Any]:
+    span = trace.get_current_span()
+    if span and span.is_recording():
+        context = span.get_span_context()
+        event_dict["trace_id"] = f"{context.trace_id:x}"
+        event_dict["span_id"] = f"{context.span_id:x}"
+    return event_dict
+
 
 # Initialize Structlog
 structlog.configure(
     processors=[
         merge_contextvars,
+        inject_trace_info,
         structlog.processors.TimeStamper(fmt="iso"),
         structlog.processors.JSONRenderer(),
     ]
@@ -31,6 +51,9 @@ def create_app() -> FastAPI:
         openapi_url="/openapi.json" if settings.env != "prod" else None,
         lifespan=lifespan,
     )
+
+    # Setup OpenTelemetry Tracing
+    setup_tracing(app)
 
     # * Add Middleware (Order matters! First added is last to execute)
 
@@ -51,9 +74,7 @@ def create_app() -> FastAPI:
 
     # ? Prometheus Metrics (Instrumentator)
     # This exposes /metrics endpoint for Prometheus to scrape
-    # Instrumentator().instrument(app).expose(
-    #   app, endpoint="/metrics"
-    # ) #! TODO: FOR TEST COMMENT OUT
+    Instrumentator().instrument(app).expose(app, endpoint="/metrics")
 
     # Include the grouped API routers
     app.include_router(api_router, prefix="/api/v1")

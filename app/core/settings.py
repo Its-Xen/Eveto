@@ -78,7 +78,7 @@ class MockPaymentSettings(BaseModel):
 
 class OTelSettings(BaseModel):
     endpoint: str
-    service_name: str = "eventhub-api"
+    service_name: str = "eveto-api"
 
 
 # Main Settings
