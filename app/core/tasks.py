@@ -26,8 +26,6 @@ provider = TracerProvider(resource=resource)
 otlp_exporter = OTLPSpanExporter(endpoint=settings.otel.endpoint, insecure=True)
 provider.add_span_processor(BatchSpanProcessor(otlp_exporter))
 trace.set_tracer_provider(provider)
-# * Get Tracer for manual spans
-tracer = trace.get_tracer(__name__)
 
 # ? AUTO-INSTRUMENT DRAMATIQ! This handles context propagation!
 DramatiqInstrumentor().instrument()
