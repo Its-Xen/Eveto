@@ -1,20 +1,25 @@
 # from prometheus_fastapi_instrumentator import Instrumentator
 from collections.abc import Mapping, MutableMapping
-from typing import Any
+from typing import Annotated, Any
 
 import structlog
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from opentelemetry import trace
 from prometheus_fastapi_instrumentator import Instrumentator
+from redis.asyncio import Redis
+from sqlalchemy import text
+from sqlalchemy.ext.asyncio import AsyncSession
 from structlog.contextvars import merge_contextvars
 
 from app.api import api_router
+from app.core.dependencies import get_redis_client
 from app.core.lifespan import lifespan
 from app.core.middleware import RequestIDMiddleware, TimingMiddleware
 from app.core.settings import settings
 from app.core.tracing import setup_tracing
+from app.db.session import get_db
 
 
 # ? Custom processor to injct OTel trace_id into logs
@@ -79,12 +84,26 @@ def create_app() -> FastAPI:
     # Include the grouped API routers
     app.include_router(api_router, prefix="/api/v1")
 
-    # Root health check endpoint
-    @app.get("/health", tags=["System"])
-    async def health_check() -> dict[str, str]:
-        """Simple health check endpoint"""
+    # Liveness Probe: Just checks if the process is alive
+    @app.get("/healthz", tags=["System"])
+    async def liveness() -> dict[str, str]:
+        """
+        Liveness probe. If this fails, the orchestrator restarts the container.
+        """
         logger.info("Health check endpoint")
-        return {"status": "healthy", "environment": settings.env}
+        return {"status": "healthy"}
+
+    @app.get("/readyz", tags=["System"])
+    async def readiness(
+        db: Annotated[AsyncSession, Depends(get_db)],
+        redis: Annotated[Redis, Depends(get_redis_client)],
+    ) -> dict[str, str]:
+        """
+        Readiness probe. If this fails, the orchestrator stops routing traffic.
+        """
+        await db.execute(text("SELECT 1"))
+        await redis.ping()
+        return {"status": "ready", "database": "connected", "redis": "connected"}
 
     logger.info("FastAPI application factory executed")
     return app

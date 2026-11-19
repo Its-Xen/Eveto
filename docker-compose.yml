@@ -43,7 +43,7 @@ services:
     container_name: eveto-api
     restart: unless-stopped
     env_file:
-      - .env  # Reads your .env file automatically
+      - .env # Reads .env file automatically
     ports:
       - "8000:8000"
     depends_on:
@@ -54,8 +54,12 @@ services:
     # Mount local code for hot-reloading during development
     volumes:
       - .:/app
-    # Override command to enable hot-reload
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    # --timeout-graceful-shutdown 30 to the command!
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4 --timeout-graceful-shutdown 30
+    # Docker waits 30s before SIGKILL!
+    stop_grace_period: 30s
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   # ----------------------------------------
   # Observability Stack
